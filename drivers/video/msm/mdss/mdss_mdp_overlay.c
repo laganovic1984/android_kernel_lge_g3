@@ -3139,7 +3139,7 @@ static void __vsync_retire_work_handler(struct work_struct *work)
 	if (!mdp5_data->ctl->remove_vsync_handler)
 		return;
 
-	__vsync_retire_signal(mdp5_data->ctl->mfd, val);
+	__vsync_retire_signal(mdp5_data->ctl->mfd, 1);
 }
 
 static void __vsync_retire_signal(struct msm_fb_data_type *mfd, int val)

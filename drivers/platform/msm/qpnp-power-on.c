@@ -1065,6 +1065,7 @@ static int __devinit qpnp_pon_probe(struct spmi_device *spmi)
 	struct device_node *itr = NULL;
 	u32 delay = 0, s3_debounce = 0;
 	int rc, sys_reset, index;
+	int disable = 0;
 	u8 pon_sts = 0, buf[2];
 	u16 poff_sts = 0;
 
@@ -1159,6 +1160,11 @@ static int __devinit qpnp_pon_probe(struct spmi_device *spmi)
 				pon->spmi->sid,
 				qpnp_poff_reason[index]);
 
+	index = ffs(pon_sts);
+	if ((index > PON_REASON_MAX) || (index < 0))
+		index = 0;
+	pr_info("PMIC@SID%d Power-on reason: %s\n", pon->spmi->sid,
+			index ? qpnp_pon_reason[index - 1] : "Unknown");
 	rc = of_property_read_u32(pon->spmi->dev.of_node,
 				"qcom,pon-dbc-delay", &delay);
 	if (rc) {
