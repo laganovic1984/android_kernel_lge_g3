@@ -360,8 +360,14 @@ struct cpu_vfs_cap_data {
 
 #define CAP_WAKE_ALARM            35
 
+#define CAP_BLOCK_SUSPEND    36
 
-#define CAP_LAST_CAP         CAP_WAKE_ALARM
+/* Allow reading the audit log via multicast netlink socket */
+
+#define CAP_AUDIT_READ          37
+
+
+#define CAP_LAST_CAP         CAP_AUDIT_READ
 
 #define cap_valid(x) ((x) >= 0 && (x) <= CAP_LAST_CAP)
 
