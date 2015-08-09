@@ -125,8 +125,6 @@ $(KERNEL_OUT)/piggy : $(TARGET_PREBUILT_INT_KERNEL)
 
 $(TARGET_PREBUILT_INT_KERNEL): $(KERNEL_OUT) $(KERNEL_CONFIG) $(KERNEL_HEADERS_INSTALL)
 	$(MAKE) -C $(LOCAL_DIR) O=$(ANDROID_BUILD_TOP)/$(KERNEL_OUT) ARCH=arm CROSS_COMPILE=$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
-	$(MAKE) -C $(LOCAL_DIR) O=$(ANDROID_BUILD_TOP)/$(KERNEL_OUT) ARCH=arm CROSS_COMPILE=$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi- modules
-	$(MAKE) -C $(LOCAL_DIR) O=$(ANDROID_BUILD_TOP)/$(KERNEL_OUT) INSTALL_MOD_PATH=../../$(KERNEL_MODULES_INSTALL) INSTALL_MOD_STRIP=1 ARCH=arm CROSS_COMPILE=$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi- modules_install
 
 ifeq ($(PRODUCT_SUPPORT_EXFAT), y)
 	@cp -f $(ANDROID_BUILD_TOP)/kernel/lge/g3/tuxera_update.sh $(ANDROID_BUILD_TOP)
@@ -141,8 +139,6 @@ ifeq ($(PRODUCT_SUPPORT_EXFAT), y)
 	@rm -f tuxera_update.sh
 endif
 
-	$(mv-modules)
-	$(clean-module-folder)
 # VMware_S
 	$(rm-mvp-modules)
 # VMware_E
