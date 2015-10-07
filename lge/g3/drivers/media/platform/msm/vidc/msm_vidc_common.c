@@ -129,6 +129,7 @@ static int msm_comm_get_load(struct msm_vidc_core *core,
 		dprintk(VIDC_ERR, "Invalid args: %p\n", core);
 		return -EINVAL;
 	}
+	mutex_lock(&core->sync_lock);
 	list_for_each_entry(inst, &core->instances, list) {
 		mutex_lock(&inst->lock);
 		if (inst->session_type == type &&
@@ -136,12 +137,12 @@ static int msm_comm_get_load(struct msm_vidc_core *core,
 			inst->state < MSM_VIDC_STOP_DONE) {
 			if (is_non_realtime_session(inst) && calc == LOAD)
 				// 1 fps load for non-realtime
-				num_mbs_per_sec +=
-                                        msm_comm_get_mbs_per_sec(inst)/inst->prop.fps;
+				num_mbs_per_sec += 
+		            msm_comm_get_mbs_per_sec(inst)/inst->prop.fps;
 			else if (!is_thumbnail_session(inst))
-				num_mbs_per_sec +=
-					msm_comm_get_mbs_per_sec(inst);
-		}
+ 				num_mbs_per_sec +=
+ 					msm_comm_get_mbs_per_sec(inst);	
+				}
 		mutex_unlock(&inst->lock);
 	}
 	return num_mbs_per_sec;
