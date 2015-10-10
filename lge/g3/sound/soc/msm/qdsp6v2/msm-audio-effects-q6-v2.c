@@ -621,6 +621,11 @@ int msm_audio_effects_popless_eq_handler(struct audio_client *ac,
 			}
 			for (j = 0; j < eq->config.num_bands; j++) {
 				idx = *values++;
+				if (idx >= MAX_EQ_BANDS) {
+					pr_err("EQ_CONFIG:invalid band index\n");
+					rc = -EINVAL;
+					goto invalid_config;
+				}
 				eq->per_band_cfg[idx].band_idx = idx;
 				eq->per_band_cfg[idx].filter_type = *values++;
 				eq->per_band_cfg[idx].freq_millihertz =
